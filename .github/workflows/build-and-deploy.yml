@@ -16,6 +16,7 @@ on:
 
 env:
   GODOT_VERSION: "4.4.1"
+  GODOT_EXPORT_VERSION: "4.4-stable"
   GAME_NAME: "Godot-QuickStart"
 
 jobs:
@@ -95,8 +96,8 @@ jobs:
       uses: firebelley/godot-export@v6.0.0
       with:
         # Defining all the required inputs
-        godot_executable_download_url: https://github.com/godotengine/godot/releases/download/${{ env.GODOT_VERSION }}/Godot_v${{ env.GODOT_VERSION }}_linux.x86_64.zip
-        godot_export_templates_download_url: https://github.com/godotengine/godot/releases/download/${{ env.GODOT_VERSION }}/Godot_v${{ env.GODOT_VERSION }}_export_templates.tpz
+        godot_executable_download_url: https://github.com/godotengine/godot/releases/download/${{ env.GODOT_EXPORT_VERSION }}/Godot_v${{ env.GODOT_EXPORT_VERSION }}_linux.x86_64.zip
+        godot_export_templates_download_url: https://github.com/godotengine/godot/releases/download/${{ env.GODOT_EXPORT_VERSION }}/Godot_v${{ env.GODOT_EXPORT_VERSION }}_export_templates.tpz
         relative_project_path: ./ # Project is in root directory
         cache: true
         export_debug: false
@@ -140,7 +141,7 @@ jobs:
         body: |
           ## ${{ env.GAME_NAME }} Release ${{ github.ref_name }}
 
-          🎮 **Godot Quickstart Game** - Built automatically from GitHub Actions using Godot ${{ env.GODOT_VERSION }}
+          🎮 **Godot Quickstart Game** - Built automatically from GitHub Actions using Godot ${{ env.GODOT_EXPORT_VERSION }}
 
           ### 📥 Downloads
           Download the appropriate build for your platform from the assets below:
