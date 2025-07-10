@@ -5,11 +5,6 @@ on:
   push:
     tags:
       - "v*" # Push events to matching v*, i.e. v1.0, v20.15.10
-    branches:
-      - main # Also build on main branch pushes
-  pull_request:
-    branches:
-      - main
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
@@ -157,9 +152,9 @@ jobs:
           ### 🔄 Changes
           See the auto-generated release notes below for detailed changes.
 
-  # Web deployment job - runs on main branch pushes
+  # Web deployment job - deploys web build to GitHub Pages on releases
   deploy_web:
-    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    if: startsWith(github.ref, 'refs/tags/v')
     needs: build_game
     runs-on: ubuntu-latest
     permissions:
@@ -169,7 +164,7 @@ jobs:
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
-    name: "🌐 Deploy to GitHub Pages"
+    name: "🌐 Deploy Web Build to GitHub Pages"
     steps:
     - name: Download Build Artifacts
       uses: actions/download-artifact@v4
@@ -179,10 +174,13 @@ jobs:
 
     - name: Extract Web Build
       run: |
+        echo "🔍 Looking for web build files..."
+        find ./builds -type f -name "*" | head -20
+
         # Find and extract the web build
         find ./builds -name "*web*" -type f \( -name "*.zip" -o -name "*.tar.gz" \) -exec sh -c '
           for file; do
-            echo "Extracting web build: $file"
+            echo "📦 Extracting web build: $file"
             mkdir -p ./web-build
             case "$file" in
               *.zip) unzip -q "$file" -d ./web-build ;;
@@ -191,9 +189,23 @@ jobs:
           done
         ' _ {} +
 
-        # List contents for debugging
-        echo "Web build contents:"
-        find ./web-build -type f
+        # If no archived web build found, look for direct web files
+        if [ ! -d "./web-build" ] || [ -z "$(ls -A ./web-build)" ]; then
+          echo "🔍 No archived web build found, looking for direct web files..."
+          find ./builds -name "*.html" -o -name "*.js" -o -name "*.wasm" -o -name "*.pck" | head -10
+
+          # Copy web files directly if they exist
+          web_files=$(find ./builds -name "*.html")
+          if [ -n "$web_files" ]; then
+            echo "📋 Copying web files directly..."
+            mkdir -p ./web-build
+            find ./builds -name "*.html" -o -name "*.js" -o -name "*.wasm" -o -name "*.pck" -exec cp {} ./web-build/ \;
+          fi
+        fi
+
+        # List final web build contents
+        echo "🌐 Final web build contents:"
+        find ./web-build -type f 2>/dev/null || echo "No web build files found"
 
     - name: Setup Pages
       uses: actions/configure-pages@v4
@@ -206,3 +218,5 @@ jobs:
     - name: Deploy to GitHub Pages
       id: deployment
       uses: actions/deploy-pages@v4
+
+
