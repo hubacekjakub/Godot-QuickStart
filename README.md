@@ -4,11 +4,11 @@
 
 
 
+
 [![CI Status](https://github.com/hubacekjakub/Godot-QuickStart/actions/workflows/quick-validation.yml/badge.svg)](https://github.com/hubacekjakub/Godot-QuickStart/actions/workflows/quick-validation.yml)
-[![GitHub release](https://img.shields.io/github/v/release/hubacekjakub/Godot-QuickStart)](https://github.com/hubacekjakub/Godot-QuickStart/releases)
+[![GitHub Release](https://img.shields.io/badge/GitHub-Release-blue?logo=github)](https://github.com/hubacekjakub/Godot-QuickStart/releases)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://github.com/hubacekjakub/Godot-QuickStart/blob/main/LICENSE)
 [![Godot 4.4+](https://img.shields.io/badge/Godot-4.4%2B-blue)](https://godotengine.org/)
-[![Itch.io](https://img.shields.io/badge/itch.io-template-red)](https://itch.io/)
 
 My personal Godot 4 project template for rapid game development. Perfect for game jams and prototypes!
 
