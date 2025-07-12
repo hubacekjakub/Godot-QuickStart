@@ -6,7 +6,7 @@
 
 
 [![CI Status](https://github.com/hubacekjakub/Godot-QuickStart/actions/workflows/quick-validation.yml/badge.svg)](https://github.com/hubacekjakub/Godot-QuickStart/actions/workflows/quick-validation.yml)
-[![GitHub Release](https://img.shields.io/badge/GitHub-Release-blue?logo=github)](https://github.com/hubacekjakub/Godot-QuickStart/releases)
+[![Latest Release](https://img.shields.io/badge/GitHub-Release-blue?logo=github)](https://github.com/hubacekjakub/Godot-QuickStart/releases)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://github.com/hubacekjakub/Godot-QuickStart/blob/main/LICENSE)
 [![Godot 4.4+](https://img.shields.io/badge/Godot-4.4%2B-blue)](https://godotengine.org/)
 
