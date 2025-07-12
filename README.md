@@ -1,7 +1,13 @@
 
 # Godot QuickStart Template
 
+
+
 ![CI Status](https://github.com/hubacekjakub/Godot-QuickStart/actions/workflows/quick-validation.yml/badge.svg)
+![GitHub release](https://img.shields.io/github/v/release/hubacekjakub/Godot-QuickStart)
+![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)
+![Godot 4.4+](https://img.shields.io/badge/Godot-4.4%2B-blue)
+![Itch.io](https://img.shields.io/badge/itch.io-template-red)
 
 My personal Godot 4 project template for rapid game development. Perfect for game jams and prototypes!
 
