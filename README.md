@@ -1,4 +1,7 @@
+
 # Godot QuickStart Template
+
+![CI Status](https://github.com/hubacekjakub/Godot-QuickStart/actions/workflows/quick-validation.yml/badge.svg)
 
 My personal Godot 4 project template for rapid game development. Perfect for game jams and prototypes!
 
@@ -73,6 +76,7 @@ git push origin v1.0.0
 └── builds/          # Export output (auto-generated)
 ```
 
+
 ## 🎯 What's Included
 
 - **Clean Godot 4.4+ project** with basic ball movement
@@ -80,3 +84,8 @@ git push origin v1.0.0
 - **Export presets** for Windows, Linux, and Web
 - **GitHub Actions CI/CD** for automatic builds
 - **Proper gitignore** and project structure
+
+## 📝 License
+
+This project is licensed under the [MIT License](LICENSE).
+You are free to use, modify, and distribute this template in your own projects.
