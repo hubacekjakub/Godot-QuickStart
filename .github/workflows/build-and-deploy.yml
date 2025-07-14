@@ -172,12 +172,36 @@ jobs:
         BUTLER_API_KEY: ${{ secrets.BUTLER_API_KEY }}
       run: |
         echo "🚀 Deploying to itch.io..."
-
-        # Find the web build (usually contains 'web' in filename)
-        WEB_BUILD=$(find ./builds -name "*web*" -type f | head -1)
+        
+        # List all build artifacts for debugging
+        echo "📋 Available build files:"
+        ls -la ./builds/
+        
+        # Look for web build in multiple ways
+        WEB_BUILD=""
+        
+        # Method 1: Look for files with 'web' in name (case insensitive)
+        WEB_BUILD=$(find ./builds -iname "*web*" -type f | head -1)
+        
+        # Method 2: Look for index.html (common web export file)
+        if [ -z "$WEB_BUILD" ]; then
+          WEB_BUILD=$(find ./builds -name "index.html" -type f | head -1)
+        fi
+        
+        # Method 3: Look for .zip files that might contain web build
+        if [ -z "$WEB_BUILD" ]; then
+          WEB_BUILD=$(find ./builds -name "*.zip" -type f | grep -i web | head -1)
+        fi
+        
+        # Method 4: Look for any .zip file as fallback
+        if [ -z "$WEB_BUILD" ]; then
+          WEB_BUILD=$(find ./builds -name "*.zip" -type f | head -1)
+        fi
 
         if [ -z "$WEB_BUILD" ]; then
           echo "❌ Web build not found in artifacts"
+          echo "Available files:"
+          find ./builds -type f
           exit 1
         fi
 
@@ -185,12 +209,33 @@ jobs:
 
         # Extract web build if it's a zip
         if [[ "$WEB_BUILD" == *.zip ]]; then
+          echo "📦 Extracting web build from zip..."
           mkdir -p ./web_build
           unzip "$WEB_BUILD" -d ./web_build
-          WEB_DIR="./web_build"
+          
+          # Find the actual web directory inside the extracted files
+          if [ -d "./web_build/web" ]; then
+            WEB_DIR="./web_build/web"
+          elif [ -f "./web_build/index.html" ]; then
+            WEB_DIR="./web_build"
+          else
+            # Look for any directory containing index.html
+            WEB_DIR=$(find ./web_build -name "index.html" -type f -exec dirname {} \; | head -1)
+            if [ -z "$WEB_DIR" ]; then
+              WEB_DIR="./web_build"
+            fi
+          fi
+        elif [ -f "$WEB_BUILD" ] && [[ "$WEB_BUILD" == *"index.html" ]]; then
+          # If we found index.html directly, use its directory
+          WEB_DIR=$(dirname "$WEB_BUILD")
         else
+          # Use the builds directory as fallback
           WEB_DIR="./builds"
         fi
+        
+        echo "🎯 Using web directory: $WEB_DIR"
+        echo "📂 Web directory contents:"
+        ls -la "$WEB_DIR"
 
         # Deploy to itch.io (replace 'your-username/your-game' with actual itch.io project)
         # Format: butler push <build-directory> <user>/<game>:<channel>
