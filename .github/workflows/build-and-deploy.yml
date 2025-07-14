@@ -147,3 +147,55 @@ jobs:
           ### 🔄 Changes
           See the auto-generated release notes below for detailed changes.
 
+  # Deploy job - only runs on version tags after release
+  deploy_game:
+    # Only run this job if it's a version tag push
+    if: startsWith(github.ref, 'refs/tags/v')
+    needs: release_game # Wait for release to complete
+    runs-on: ubuntu-latest
+    name: "🚀 Deploy to itch.io"
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+
+    - name: Download Build Artifacts
+      uses: actions/download-artifact@v4
+      with:
+        name: ${{ env.GAME_NAME }}-builds-${{ github.sha }}
+        path: ./builds
+
+    - name: Setup Butler (itch.io CLI)
+      uses: jdno/setup-butler@v1
+
+    - name: Deploy Web Build to itch.io
+      env:
+        BUTLER_API_KEY: ${{ secrets.BUTLER_API_KEY }}
+      run: |
+        echo "🚀 Deploying to itch.io..."
+
+        # Find the web build (usually contains 'web' in filename)
+        WEB_BUILD=$(find ./builds -name "*web*" -type f | head -1)
+
+        if [ -z "$WEB_BUILD" ]; then
+          echo "❌ Web build not found in artifacts"
+          exit 1
+        fi
+
+        echo "📦 Found web build: $WEB_BUILD"
+
+        # Extract web build if it's a zip
+        if [[ "$WEB_BUILD" == *.zip ]]; then
+          mkdir -p ./web_build
+          unzip "$WEB_BUILD" -d ./web_build
+          WEB_DIR="./web_build"
+        else
+          WEB_DIR="./builds"
+        fi
+
+        # Deploy to itch.io (replace 'your-username/your-game' with actual itch.io project)
+        # Format: butler push <build-directory> <user>/<game>:<channel>
+        butler push "$WEB_DIR" ${{ secrets.ITCH_USERNAME }}/${{ secrets.ITCH_GAME_NAME }}:web --userversion ${{ github.ref_name }}
+
+        echo "✅ Successfully deployed to itch.io!"
+        echo "🌐 Game should be available at: https://${{ secrets.ITCH_USERNAME }}.itch.io/${{ secrets.ITCH_GAME_NAME }}"
+

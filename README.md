@@ -1,10 +1,6 @@
 
 # Godot QuickStart Template
 
-
-
-
-
 [![CI Status](https://github.com/hubacekjakub/Godot-QuickStart/actions/workflows/quick-validation.yml/badge.svg)](https://github.com/hubacekjakub/Godot-QuickStart/actions/workflows/quick-validation.yml)
 [![Latest Release](https://img.shields.io/badge/GitHub-Release-blue?logo=github)](https://github.com/hubacekjakub/Godot-QuickStart/releases)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://github.com/hubacekjakub/Godot-QuickStart/blob/main/LICENSE)
