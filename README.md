@@ -9,7 +9,7 @@
 
 **My personal Godot 4.4 template with automated CI/CD and itch.io deployment.** Speed up development and deployment of any Godot project.
 
-🎮 **[Try Live Demo](https://hubacekjakub.itch.io/godot-quick-start)** • 📖 **[See it in action!](https://hubacekjakub.itch.io/godot-quick-start)**
+🎮 **[Try Live Demo](https://hubacekjakub.itch.io/godot-quick-start)**
 
 ## ✨ What Makes This Special
 
