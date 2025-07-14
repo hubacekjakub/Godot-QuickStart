@@ -5,90 +5,81 @@
 [![Latest Release](https://img.shields.io/badge/GitHub-Release-blue?logo=github)](https://github.com/hubacekjakub/Godot-QuickStart/releases)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://github.com/hubacekjakub/Godot-QuickStart/blob/main/LICENSE)
 [![Godot 4.4+](https://img.shields.io/badge/Godot-4.4%2B-blue)](https://godotengine.org/)
+[![itch.io](https://img.shields.io/badge/itch.io-Live%20Demo-FA5C5C?logo=itch.io)](https://hubacekjakub.itch.io/godot-quick-start)
 
-My personal Godot 4 project template for rapid game development. Perfect for game jams and prototypes!
+**My personal Godot 4.4 template with automated CI/CD and itch.io deployment.** Speed up development and deployment of any Godot project.
+
+🎮 **[Try Live Demo](https://hubacekjakub.itch.io/godot-quick-start)** • 📖 **[See it in action!](https://hubacekjakub.itch.io/godot-quick-start)**
+
+## ✨ What Makes This Special
+
+This template eliminates the tedious setup work for modern Godot development:
+- **Zero-config CI/CD** - Works out of the box with GitHub Actions
+- **Production-ready workflow** - Used for real game releases
+- **Developer-friendly** - VS Code integration with proper debugging
+- **One-tag deployment** - Push `v1.0.0` and your game is live on itch.io
+
+Perfect for game jams, prototypes, or serious indie projects!
 
 ## 🚀 Quick Start
 
-1. **Clone this repository**
-2. **Open Godot** and import `project.godot`
-3. **Press F5** to run the template
-4. **Replace the ball** with your game objects
+1. **Fork** this repository → **Clone** your fork → **Open** in Godot
+2. **Press F5** to run • **Replace the ball** with your game
+3. **Optional:** Set up [itch.io deployment](#-automated-deployment) for one-click publishing
 
-## 🎮 Controls
+**Controls:** WASD/Arrows to move • Escape to quit
 
-- **WASD** or **Arrow Keys** - Move the white ball
-- **Escape** - Quit the game
+## ⚡ Features
 
-## 🔧 VS Code Tasks & Launch Options
+- **Complete CI/CD Pipeline** - Push a tag, get automatic builds + itch.io deployment
+- **Multi-Platform Builds** - Windows, Linux, Web exports on every release
+- **VS Code Integration** - Debugging, tasks, and launch configurations included
+- **Professional Structure** - Organized folders, export presets, proper gitignore
 
-### Available Tasks
-Run these from VS Code Command Palette (`Ctrl+Shift+P` → "Tasks: Run Task"):
+## 🤖 Automated Deployment
 
-- **Run Godot Project** - Opens Godot editor
-- **Run Game** - Launches the game directly
-- **🐛 Debug Godot Project** - Opens editor with debug flags
-- **🔍 Run Game with Remote Debug** - Runs game with remote debugging
-
-### Launch Configurations
-Available in VS Code Debug panel (`F5`):
-
-- **🐛 Debug GDScript** - Main debugging configuration
-- **🎮 Debug Main Scene** - Debug starting from main scene
-- **🔗 Attach to Running Godot** - Connect to running Godot instance
-
-### How to Debug
-1. Set breakpoints in `.gd` files
-2. Press `F5` in VS Code (starts debugger)
-3. Launch game with "Run Game with Remote Debug" task
-4. Use `F10` (step over), `F11` (step into), `Shift+F11` (step out)
-
-## 🤖 GitHub Actions
-
-Two automated workflows included:
-
-### Quick Validation (`quick-validation.yml`)
-- **Triggers**: Every push and pull request
-- **Purpose**: Fast syntax and project validation
-- **Runtime**: ~2 minutes
-
-### Build & Deploy (`build-and-deploy.yml`)
-- **Triggers**: Tags starting with `v` (e.g., `v1.0.0`)
-- **Builds**: Windows (.exe), Linux (.x86_64), Web (HTML5)
-- **Outputs**:
-  - GitHub Release with downloadable builds
-  - Web version deployed to GitHub Pages
-- **Runtime**: ~10 minutes
-
-### Usage
+### One-Command Release
 ```bash
-# Create a release
-git tag v1.0.0
-git push origin v1.0.0
-# → Triggers automatic build and deployment
+git tag v1.0.0 && git push origin v1.0.0
+# → Automatic build + GitHub release + itch.io deployment!
 ```
+
+### Setup (Optional)
+Add these GitHub secrets for itch.io deployment:
+- **`BUTLER_API_KEY`** - Get from https://itch.io/user/settings/api-keys
+- **`ITCH_USERNAME`** - Your itch.io username
+- **`ITCH_GAME_NAME`** - Your game project name
+
+**Example:** This demo was deployed automatically: https://hubacekjakub.itch.io/godot-quick-start
+
+### What Happens Automatically
+1. **Validation** - GDScript syntax check and project verification
+2. **Build** - Creates Windows .exe, Linux executable, and Web build
+3. **Release** - GitHub release with downloadable files
+4. **Deploy** - Web version automatically published to itch.io
+5. **Notify** - Build status and links in GitHub Actions
 
 ## 📁 Project Structure
 
 ```
-├── scenes/          # Game scenes
-├── scripts/         # GDScript files
+├── scenes/          # Game scenes (.tscn)
+├── scripts/         # GDScript files (.gd)
 ├── assets/          # Fonts, sounds, textures
-├── .vscode/         # VS Code configuration
-├── .github/         # GitHub Actions workflows
-└── builds/          # Export output (auto-generated)
+├── .vscode/         # VS Code integration
+└── .github/         # CI/CD workflows
 ```
 
+## 🔧 VS Code Features
 
-## 🎯 What's Included
-
-- **Clean Godot 4.4+ project** with basic ball movement
-- **VS Code integration** with debugging and tasks
-- **Export presets** for Windows, Linux, and Web
-- **GitHub Actions CI/CD** for automatic builds
-- **Proper gitignore** and project structure
+- **Tasks:** Run Godot Project, Run Game, Debug modes
+- **Debugging:** Breakpoints, step-through, remote debug
+- **Launch configs:** F5 to start debugging sessions
 
 ## 📝 License
 
 This project is licensed under the [MIT License](LICENSE).
 You are free to use, modify, and distribute this template in your own projects.
+
+---
+
+**💡 Pro Tip:** Star this repo if it helps your workflow! Questions? Open an issue or check the [live demo](https://hubacekjakub.itch.io/godot-quick-start) to see everything working.
