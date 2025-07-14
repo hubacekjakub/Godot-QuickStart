@@ -1,11 +1,11 @@
 
 # Godot QuickStart Template
 
+[![itch.io](https://img.shields.io/badge/itch.io-Live%20Demo-3eff6a?logo=itch.io)](https://hubacekjakub.itch.io/godot-quick-start)
 [![CI Status](https://github.com/hubacekjakub/Godot-QuickStart/actions/workflows/quick-validation.yml/badge.svg)](https://github.com/hubacekjakub/Godot-QuickStart/actions/workflows/quick-validation.yml)
 [![Latest Release](https://img.shields.io/badge/GitHub-Release-blue?logo=github)](https://github.com/hubacekjakub/Godot-QuickStart/releases/latest)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://github.com/hubacekjakub/Godot-QuickStart/blob/main/LICENSE)
 [![Godot 4.4+](https://img.shields.io/badge/Godot-4.4%2B-blue)](https://godotengine.org/)
-[![itch.io](https://img.shields.io/badge/itch.io-Live%20Demo-FA5C5C?logo=itch.io)](https://hubacekjakub.itch.io/godot-quick-start)
 
 **My personal Godot 4.4 template with automated CI/CD and itch.io deployment.** Speed up development and deployment of any Godot project.
 
