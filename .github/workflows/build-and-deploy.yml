@@ -1,8 +1,9 @@
-name: "Build and Release Godot-QuickStart"
+name: "Build and Release"
 
 # Trigger on version tags and manual dispatch
 on:
   push:
+    branches: [main, master]
     tags:
       - "v*" # Push events to matching v*, i.e. v1.0, v20.15.10
 
