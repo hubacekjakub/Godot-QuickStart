@@ -32,6 +32,7 @@ jobs:
           include-templates: true
 
       - name: Cache Godot Files
+        id: cache-godot
         uses: actions/cache@v4
         with:
           path: |
@@ -40,6 +41,14 @@ jobs:
           key: ${{ runner.os }}-godot-${{ env.GODOT_VERSION }}-${{ hashFiles('**/*.gd', '**/*.tscn', '**/*.tres', 'project.godot') }}
           restore-keys: |
             ${{ runner.os }}-godot-${{ env.GODOT_VERSION }}-
+
+      - name: Cache Status Report
+        run: |
+          if [ "${{ steps.cache-godot.outputs.cache-hit }}" == "true" ]; then
+            echo "🎯 Cache HIT! Using cached Godot files"
+          else
+            echo "📥 Cache MISS - downloading and caching Godot files"
+          fi
 
       - name: Verify Project Structure
         run: |
@@ -70,41 +79,53 @@ jobs:
             echo "⚠️ Project import completed with timeout"
           }
 
-      - name: Validate GDScript Files
+      - name: Validate all scripts
         run: |
-          echo "🔍 Validating GDScript files..."
+          echo "🔍 Validating all scripts..."
+          if ! godot --headless --check-only --quit --path .; then
+            echo "❌ Script validation failed"
+            exit 1
+          fi
+          echo "✅ All scripts are valid"
 
-          # Find all .gd files and validate them
-          find . -name "*.gd" -not -path "./.godot/*" | while read -r script; do
-            echo "Checking $script..."
-            if ! godot --headless --check-only --script "$script" --path .; then
-              echo "❌ Script validation failed for $script"
-              exit 1
+      - name: Validate each level loading
+        run: |
+          echo "🎮 Testing levels..."
+          LEVELS_DIR="./levels"  # Change this if your levels are stored elsewhere
+          EXIT_CODE=0
+
+          # Check if levels directory exists
+          if [ ! -d "$LEVELS_DIR" ]; then
+            echo "📁 Levels directory '$LEVELS_DIR' does not exist, skipping level tests"
+            exit 0
+          fi
+
+          LEVELS=$(find "$LEVELS_DIR" -type f \( -name "*.tscn" -o -name "*.scn" \) 2>/dev/null)
+
+          if [ -z "$LEVELS" ]; then
+            echo "⚠️ No levels found in $LEVELS_DIR, skipping level tests"
+            exit 0
+          fi
+
+          echo "📋 Found levels:"
+          echo "$LEVELS"
+
+          for level in $LEVELS; do
+            echo "=== Opening and closing level: $level ==="
+            if ! timeout 10 godot --headless --path . --main-scene "$level" --quit-after 5; then
+              echo "❌ Level $level failed to run"
+              EXIT_CODE=1
+            else
+              echo "✅ Level $level completed successfully"
             fi
           done
 
-          echo "✅ All GDScript files are valid"
-
-      - name: Test Scene Loading
-        run: |
-          echo "🎬 Testing scene loading..."
-
-          # Test loading all scene files
-          find scenes/ -name "*.tscn" 2>/dev/null | while read -r scene; do
-            echo "Testing scene: $scene"
-            # Capture both stdout and stderr, but only fail on actual errors, not warnings
-            if ! timeout 30 godot --headless --path . --check-only "$scene" 2>&1 | tee /tmp/godot_output.log; then
-              # Check if it's a real error (not just warnings)
-              if grep -q "ERROR\|SCRIPT ERROR\|Parse Error" /tmp/godot_output.log; then
-                echo "❌ Scene validation failed for $scene with actual errors"
-                exit 1
-              else
-                echo "⚠️  Scene $scene has warnings but loads successfully"
-              fi
-            fi
-          done
-
-          echo "✅ All scenes load correctly"
+          if [ $EXIT_CODE -eq 0 ]; then
+            echo "✅ All levels tested successfully"
+          else
+            echo "❌ Some levels failed"
+          fi
+          exit $EXIT_CODE
 
       - name: Check for Common Issues
         run: |

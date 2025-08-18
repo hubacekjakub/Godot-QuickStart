@@ -3,7 +3,6 @@ name: "Build and Release"
 # Trigger on version tags and manual dispatch
 on:
   push:
-    branches: [main, master]
     tags:
       - "v*" # Push events to matching v*, i.e. v1.0, v20.15.10
 
@@ -16,25 +15,19 @@ env:
   GAME_NAME: "Godot-QuickStart"
 
 jobs:
-  # Validation job - runs first to catch issues early
+  # Quick validation job - runs first to catch issues early without downloading Godot
   validate:
     runs-on: ubuntu-latest
-    name: "🔍 Validate Project"
+    name: "🔍 Quick Validate Project"
     steps:
       - name: Checkout
         uses: actions/checkout@v4
         with:
           lfs: true
 
-      - name: Setup Godot
-        uses: chickensoft-games/setup-godot@v2
-        with:
-          version: ${{ env.GODOT_VERSION }}
-          use-dotnet: false
-
-      - name: Verify project structure
+      - name: Verify core project files and directories
         run: |
-          echo "🔍 Checking project structure..."
+          echo "🔍 Checking core project files and directories..."
 
           if [ ! -f "project.godot" ]; then
             echo "❌ project.godot not found!"
@@ -46,25 +39,85 @@ jobs:
             exit 1
           fi
 
+          if [ ! -d "levels" ]; then
+            echo "❌ levels directory not found!"
+            exit 1
+          fi
+
           if [ ! -d "scripts" ]; then
             echo "❌ scripts directory not found!"
             exit 1
           fi
 
-          echo "✅ Project structure is valid"
+          echo "✅ Core project files and directories present"
 
-      - name: Import and validate project
+      - name: Verify export configuration
         run: |
-          echo "📦 Importing project..."
-          timeout 120 godot --headless --verbose --editor --quit-after 5 --path . || echo "⚠️ Import completed"
+          echo "🔍 Checking export configuration..."
 
-          echo "🔍 Validating GDScript files..."
-          find . -name "*.gd" -not -path "./.godot/*" | while read -r script; do
-            echo "Checking $script..."
-            godot --headless --check-only --script "$script" --path . || exit 1
+          if [ ! -f "export_presets.cfg" ]; then
+            echo "⚠️ export_presets.cfg not found - exports may fail!"
+            echo "📝 Create export presets in Godot editor before building"
+          else
+            echo "✅ Export presets configuration found"
+
+            # Validate export presets contain required platforms
+            if ! grep -q "platform=\"Web\"" export_presets.cfg; then
+              echo "⚠️ Web export preset not found in export_presets.cfg"
+            fi
+            if ! grep -q "platform=\"Windows Desktop\"" export_presets.cfg; then
+              echo "⚠️ Windows Desktop export preset not found in export_presets.cfg"
+            fi
+            if ! grep -q "platform=\"Linux/X11\"" export_presets.cfg; then
+              echo "⚠️ Linux export preset not found in export_presets.cfg"
+            fi
+          fi
+
+          echo "✅ Export configuration validation completed"
+
+      - name: Check GDScript syntax
+        run: |
+          echo "🔍 Checking GDScript files for basic syntax issues..."
+
+          # Find all .gd files
+          GD_FILES=$(find . -name "*.gd" -type f)
+
+          if [ -z "$GD_FILES" ]; then
+            echo "⚠️ No GDScript files found"
+            exit 0
+          fi
+
+          ERROR_COUNT=0
+
+          for file in $GD_FILES; do
+            echo "📝 Checking: $file"
+
+            # Check for common syntax errors
+            if grep -n "extends$" "$file"; then
+              echo "❌ $file: 'extends' without class name"
+              ERROR_COUNT=$((ERROR_COUNT + 1))
+            fi
+
+            # Check for unmatched brackets (basic check)
+            OPEN_BRACES=$(grep -o "{" "$file" | wc -l)
+            CLOSE_BRACES=$(grep -o "}" "$file" | wc -l)
+            if [ "$OPEN_BRACES" -ne "$CLOSE_BRACES" ]; then
+              echo "⚠️ $file: Unmatched braces (${OPEN_BRACES} open, ${CLOSE_BRACES} close)"
+            fi
+
+            # Check for missing colons after control structures
+            if grep -n "if .*[^:]$" "$file"; then
+              echo "⚠️ $file: Potential missing colon after if statement"
+            fi
+
           done
 
-          echo "✅ Validation completed"
+          if [ $ERROR_COUNT -gt 0 ]; then
+            echo "❌ Found $ERROR_COUNT syntax errors"
+            exit 1
+          fi
+
+          echo "✅ Basic GDScript syntax check completed"
 
   # Build job - runs after validation
   build_game:
@@ -82,8 +135,9 @@ jobs:
     - name: Install Wine
       id: wine_install
       run: |
-        sudo apt-get update
-        sudo apt-get install -y wine64
+        sudo apt-get update -y
+        sudo apt-get install -y --no-install-recommends wine64
+
         echo "WINE_PATH=$(which wine64)" >> $GITHUB_OUTPUT
 
     - name: Export Game
@@ -168,34 +222,50 @@ jobs:
     - name: Setup Butler (itch.io CLI)
       uses: jdno/setup-butler@v1
 
-    - name: Deploy Web Build to itch.io
+    - name: Deploy All Builds to itch.io
       env:
         BUTLER_API_KEY: ${{ secrets.BUTLER_API_KEY }}
       run: |
-        echo "🚀 Deploying to itch.io..."
+        echo "🚀 Deploying all builds to itch.io..."
+        echo "📋 Available files:"
+        ls -la ./builds/
 
-        # Find the web build (consistently named Web.zip)
+        # Deploy Web Build
         WEB_BUILD="./builds/Web.zip"
-
-        if [ ! -f "$WEB_BUILD" ]; then
-          echo "❌ Web.zip not found in artifacts"
-          echo "📋 Available files:"
-          ls -la ./builds/
-          exit 1
+        if [ -f "$WEB_BUILD" ]; then
+          echo "📦 Deploying web build..."
+          mkdir -p ./web_build
+          unzip "$WEB_BUILD" -d ./web_build
+          butler push "./web_build" ${{ secrets.ITCH_USERNAME }}/${{ secrets.ITCH_GAME_NAME }}:web --userversion ${{ github.ref_name }}
+          echo "✅ Web build deployed successfully!"
+        else
+          echo "⚠️ Web.zip not found, skipping web deployment"
         fi
 
-        echo "📦 Found web build: $WEB_BUILD"
+        # Deploy Windows Build
+        WINDOWS_BUILD="./builds/Windows Desktop.zip"
+        if [ -f "$WINDOWS_BUILD" ]; then
+          echo "📦 Deploying Windows build..."
+          mkdir -p ./windows_build
+          unzip "$WINDOWS_BUILD" -d ./windows_build
+          butler push "./windows_build" ${{ secrets.ITCH_USERNAME }}/${{ secrets.ITCH_GAME_NAME }}:windows --userversion ${{ github.ref_name }}
+          echo "✅ Windows build deployed successfully!"
+        else
+          echo "⚠️ Windows Desktop.zip not found, skipping Windows deployment"
+        fi
 
-        # Extract web build
-        echo "📦 Extracting web build..."
-        mkdir -p ./web_build
-        unzip "$WEB_BUILD" -d ./web_build
+        # Deploy Linux Build
+        LINUX_BUILD="./builds/Linux.zip"
+        if [ -f "$LINUX_BUILD" ]; then
+          echo "📦 Deploying Linux build..."
+          mkdir -p ./linux_build
+          unzip "$LINUX_BUILD" -d ./linux_build
+          butler push "./linux_build" ${{ secrets.ITCH_USERNAME }}/${{ secrets.ITCH_GAME_NAME }}:linux --userversion ${{ github.ref_name }}
+          echo "✅ Linux build deployed successfully!"
+        else
+          echo "⚠️ Linux.zip not found, skipping Linux deployment"
+        fi
 
-        echo "🎯 Using web directory: ./web_build"
-
-        # Deploy to itch.io
-        butler push "./web_build" ${{ secrets.ITCH_USERNAME }}/${{ secrets.ITCH_GAME_NAME }}:web --userversion ${{ github.ref_name }}
-
-        echo "✅ Successfully deployed to itch.io!"
+        echo "🎉 All available builds deployed to itch.io!"
         echo "🌐 Game should be available at: https://${{ secrets.ITCH_USERNAME }}.itch.io/${{ secrets.ITCH_GAME_NAME }}"
 
