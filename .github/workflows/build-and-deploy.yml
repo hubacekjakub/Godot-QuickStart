@@ -21,7 +21,7 @@ jobs:
     name: "🔍 Quick Validate Project"
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           lfs: true
 
@@ -128,7 +128,7 @@ jobs:
       # Always include the checkout step so that
       # your project is available for Godot to export
     - name: Checkout
-      uses: actions/checkout@v4
+      uses: actions/checkout@v5
       with:
         lfs: true
 
@@ -172,16 +172,16 @@ jobs:
     name: "📦 Create Release"
     steps:
     - name: Checkout
-      uses: actions/checkout@v4
+      uses: actions/checkout@v5
 
     - name: Download Build Artifacts
-      uses: actions/download-artifact@v4
+      uses: actions/download-artifact@v5
       with:
         name: ${{ env.GAME_NAME }}-builds-${{ github.sha }}
         path: ./builds
 
     - name: Create Release
-      uses: ncipollo/release-action@v1.14.0
+      uses: ncipollo/release-action@v1.18.0
       with:
         token: ${{ secrets.GITHUB_TOKEN }}
         generateReleaseNotes: true
@@ -211,16 +211,16 @@ jobs:
     name: "🚀 Deploy to itch.io"
     steps:
     - name: Checkout
-      uses: actions/checkout@v4
+      uses: actions/checkout@v5
 
     - name: Download Build Artifacts
-      uses: actions/download-artifact@v4
+      uses: actions/download-artifact@v5
       with:
         name: ${{ env.GAME_NAME }}-builds-${{ github.sha }}
         path: ./builds
 
     - name: Setup Butler (itch.io CLI)
-      uses: jdno/setup-butler@v1
+      uses: jdno/setup-butler@v1.6.0
 
     - name: Deploy All Builds to itch.io
       env:
