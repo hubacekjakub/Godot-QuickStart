@@ -6,7 +6,7 @@
 [![Build Status](https://github.com/hubacekjakub/Godot-QuickStart/actions/workflows/build-and-deploy.yml/badge.svg)](https://github.com/hubacekjakub/Godot-QuickStart/actions/workflows/build-and-deploy.yml)
 [![Latest Release](https://img.shields.io/badge/GitHub-Release-blue?logo=github)](https://github.com/hubacekjakub/Godot-QuickStart/releases/latest)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://github.com/hubacekjakub/Godot-QuickStart/blob/main/LICENSE)
-[![Godot 4.5.1](https://img.shields.io/badge/Godot-4.5.1)](https://godotengine.org/)
+[![Godot 4.5.1](https://img.shields.io/badge/Godot-4.5.1-blue)](https://godotengine.org/)
 
 **My personal Godot 4.4 template with automated CI/CD and itch.io deployment.** Speed up development and deployment of any Godot project.
 
