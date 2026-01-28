@@ -16,20 +16,7 @@ env:
 jobs:
   build:
     runs-on: ubuntu-latest
-    name: "🏗️ Build ${{ matrix.platform }}"
-    strategy:
-      fail-fast: false
-      matrix:
-        include:
-          - platform: Web
-            preset: Web
-            needs_wine: false
-          - platform: Windows
-            preset: Windows Desktop
-            needs_wine: true
-          - platform: Linux
-            preset: Linux
-            needs_wine: false
+    name: "🏗️ Build Game"
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -37,7 +24,6 @@ jobs:
           lfs: true
 
       - name: Install Wine
-        if: matrix.needs_wine
         run: |
           sudo apt-get update -y
           sudo apt-get install -y --no-install-recommends wine64
@@ -52,12 +38,11 @@ jobs:
           cache: true
           export_debug: false
           archive_output: true
-          export_preset: ${{ matrix.preset }}
-          wine_path: ${{ matrix.needs_wine && '/usr/bin/wine64' || '' }}
+          wine_path: /usr/bin/wine64
 
-      - name: Upload Build Artifact
+      - name: Upload Build Artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: ${{ inputs.game_name }}-${{ matrix.platform }}
+          name: ${{ inputs.game_name }}-Artifacts
           path: ${{ steps.export.outputs.archive_directory }}/*
           retention-days: 30

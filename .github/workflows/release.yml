@@ -24,12 +24,11 @@ jobs:
       contents: write
     name: "📦 Create Release"
     steps:
-      - name: Download All Build Artifacts
+      - name: Download Build Artifacts
         uses: actions/download-artifact@v4
         with:
-          pattern: ${{ inputs.game_name }}-*
+          name: ${{ inputs.game_name }}-Artifacts
           path: ./builds
-          merge-multiple: true
 
       - name: Create Release
         uses: ncipollo/release-action@v1.18.0
@@ -54,12 +53,11 @@ jobs:
     runs-on: ubuntu-latest
     name: "🚀 Deploy to itch.io"
     steps:
-      - name: Download All Build Artifacts
+      - name: Download Build Artifacts
         uses: actions/download-artifact@v4
         with:
-          pattern: ${{ inputs.game_name }}-*
+          name: ${{ inputs.game_name }}-Artifacts
           path: ./builds
-          merge-multiple: true
 
       - name: Setup Butler
         uses: jdno/setup-butler@v1.6.0
