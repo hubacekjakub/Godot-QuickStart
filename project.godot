@@ -10,10 +10,10 @@ config_version=5
 
 [application]
 
-config/name="Quickstart Game"
+config/name="Godot-QuickStart"
 config/description="A quickstart game template made with Godot 4"
 run/main_scene="res://levels/Main.tscn"
-config/features=PackedStringArray("4.5", "GL Compatibility")
+config/features=PackedStringArray("4.6", "GL Compatibility")
 config/icon="res://icon.svg"
 
 [display]

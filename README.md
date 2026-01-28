@@ -2,13 +2,13 @@
 # Godot QuickStart Template
 
 [![itch.io](https://img.shields.io/badge/itch.io-Live%20Demo-3eff6a?logo=itch.io)](https://hubacekjakub.itch.io/godot-quick-start)
-[![CI Status](https://github.com/hubacekjakub/Godot-QuickStart/actions/workflows/quick-validation.yml/badge.svg)](https://github.com/hubacekjakub/Godot-QuickStart/actions/workflows/quick-validation.yml)
-[![Build Status](https://github.com/hubacekjakub/Godot-QuickStart/actions/workflows/build-and-deploy.yml/badge.svg)](https://github.com/hubacekjakub/Godot-QuickStart/actions/workflows/build-and-deploy.yml)
+[![CI Status](https://github.com/hubacekjakub/Godot-QuickStart/actions/workflows/main.yml/badge.svg)](https://github.com/hubacekjakub/Godot-QuickStart/actions/workflows/main.yml)
+[![Build Status](https://github.com/hubacekjakub/Godot-QuickStart/actions/workflows/main.yml/badge.svg)](https://github.com/hubacekjakub/Godot-QuickStart/actions/workflows/main.yml)
 [![Latest Release](https://img.shields.io/badge/GitHub-Release-blue?logo=github)](https://github.com/hubacekjakub/Godot-QuickStart/releases/latest)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://github.com/hubacekjakub/Godot-QuickStart/blob/main/LICENSE)
-[![Godot 4.5.1](https://img.shields.io/badge/Godot-4.5.1-blue)](https://godotengine.org/)
+[![Godot 4.6](https://img.shields.io/badge/Godot-4.6-blue)](https://godotengine.org/)
 
-**My personal Godot 4.5.1 template with automated CI/CD and itch.io deployment.** Speed up development and deployment of any Godot project.
+**My personal Godot 4.6 template with automated CI/CD and itch.io deployment.** Speed up development and deployment of any Godot project.
 
 🎮 **[Try Live Demo](https://hubacekjakub.itch.io/godot-quick-start)**
 
