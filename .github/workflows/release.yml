@@ -14,7 +14,7 @@ on:
 
 env:
   GODOT_EXPORT_VERSION: "4.6-stable"
-  GAME_NAME: ${{ inputs.game_name }}
+  ITCH_GAME_NAME: ${{ inputs.game_name }}
 
 jobs:
   # Release job - creates GitHub release with build artifacts
@@ -37,9 +37,9 @@ jobs:
           generateReleaseNotes: true
           tag: ${{ github.ref_name }}
           artifacts: ./builds/*
-          name: "${{ env.GAME_NAME }} ${{ github.ref_name }}"
+          name: "${{ env.ITCH_GAME_NAME }} ${{ github.ref_name }}"
           body: |
-            ## ${{ env.GAME_NAME }} Release ${{ github.ref_name }}
+            ## ${{ env.ITCH_GAME_NAME }} Release ${{ github.ref_name }}
 
             🎮 Built automatically using Godot ${{ env.GODOT_EXPORT_VERSION }}
 
@@ -78,7 +78,7 @@ jobs:
             mkdir -p "./deploy_$CHANNEL"
             unzip -q "$archive" -d "./deploy_$CHANNEL"
 
-            if butler push "./deploy_$CHANNEL" ${{ secrets.ITCH_USERNAME }}/${{ env.GAME_NAME }}:$CHANNEL --userversion ${{ github.ref_name }}; then
+            if butler push "./deploy_$CHANNEL" ${{ secrets.ITCH_USERNAME }}/${{ env.ITCH_GAME_NAME }}:$CHANNEL --userversion ${{ github.ref_name }}; then
               echo "✅ $CHANNEL deployed successfully"
             else
               echo "⚠️ Failed to deploy $CHANNEL"
@@ -86,4 +86,4 @@ jobs:
           done
 
           echo "🎉 Deployment complete!"
-          echo "🌐 https://${{ secrets.ITCH_USERNAME }}.itch.io/${{ env.GAME_NAME }}"
+          echo "🌐 https://${{ secrets.ITCH_USERNAME }}.itch.io/${{ env.ITCH_GAME_NAME }}"
