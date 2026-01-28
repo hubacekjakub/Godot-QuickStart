@@ -2,16 +2,15 @@ name: "Build Game"
 
 on:
   workflow_call:
-    inputs:
-      game_name:
+    secrets:
+      ITCH_GAME_NAME:
         required: true
-        type: string
   workflow_dispatch:
 
 env:
   GODOT_VERSION: "4.6"
   GODOT_EXPORT_VERSION: "4.6-stable"
-  GAME_NAME: ${{ inputs.game_name }}
+  GAME_NAME: ${{ secrets.ITCH_GAME_NAME }}
 
 jobs:
   build:
