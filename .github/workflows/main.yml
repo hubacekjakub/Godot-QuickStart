@@ -14,8 +14,6 @@ on:
     branches: [ main, develop ]
   workflow_dispatch:
 
-env:
-  GAME_NAME: "Godot-QuickStart"
 
 jobs:
   # 1️⃣ Validation Stage
@@ -31,7 +29,7 @@ jobs:
     if: startsWith(github.ref, 'refs/tags/v') || github.event_name == 'workflow_dispatch'
     uses: ./.github/workflows/build.yml
     with:
-      game_name: ${{ env.GAME_NAME }}
+      game_name: ${{ vars.ITCH_GAME_NAME }}
     secrets: inherit
 
   # 3️⃣ Release & Deploy Stage
@@ -42,7 +40,7 @@ jobs:
     if: startsWith(github.ref, 'refs/tags/v')
     uses: ./.github/workflows/release.yml
     with:
-      game_name: ${{ env.GAME_NAME }}
+      game_name: ${{ vars.ITCH_GAME_NAME }}
     secrets: inherit
     permissions:
       contents: write

@@ -11,8 +11,6 @@ on:
         required: true
       ITCH_USERNAME:
         required: true
-      ITCH_GAME_NAME:
-        required: true
 
 env:
   GODOT_EXPORT_VERSION: "4.6-stable"
@@ -80,7 +78,7 @@ jobs:
             mkdir -p "./deploy_$CHANNEL"
             unzip -q "$archive" -d "./deploy_$CHANNEL"
 
-            if butler push "./deploy_$CHANNEL" ${{ secrets.ITCH_USERNAME }}/${{ secrets.ITCH_GAME_NAME }}:$CHANNEL --userversion ${{ github.ref_name }}; then
+            if butler push "./deploy_$CHANNEL" ${{ secrets.ITCH_USERNAME }}/${{ env.GAME_NAME }}:$CHANNEL --userversion ${{ github.ref_name }}; then
               echo "✅ $CHANNEL deployed successfully"
             else
               echo "⚠️ Failed to deploy $CHANNEL"
@@ -88,4 +86,4 @@ jobs:
           done
 
           echo "🎉 Deployment complete!"
-          echo "🌐 https://${{ secrets.ITCH_USERNAME }}.itch.io/${{ secrets.ITCH_GAME_NAME }}"
+          echo "🌐 https://${{ secrets.ITCH_USERNAME }}.itch.io/${{ env.GAME_NAME }}"
