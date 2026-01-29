@@ -45,15 +45,11 @@ git tag v1.0.0 && git push origin v1.0.0
 # → Automatic build + GitHub release + itch.io deployment!
 ```
 
-### Setup (Required)
-Add this GitHub repository variable (**Settings → Secrets and variables → Actions → Variables**):
-- **`GAME_NAME`** - Your game name (e.g., `Godot-QuickStart`)
-
-### Itch.io Deployment (Optional)
+### Deployment Setup
 Add these GitHub secrets for itch.io deployment:
 - **`BUTLER_API_KEY`** - Get from https://itch.io/user/settings/api-keys
 - **`ITCH_USERNAME`** - Your itch.io username
-- **`ITCH_GAME_NAME`** - Your game project name
+- **`ITCH_GAME_NAME`** - Your game project name (e.g., `godot-quick-start`)
 
 **Example:** This demo was deployed automatically: https://hubacekjakub.itch.io/godot-quick-start
 
@@ -68,6 +64,7 @@ Add these GitHub secrets for itch.io deployment:
 
 ```
 ├── scenes/          # Game scenes (.tscn)
+├── levels/          # Main game levels
 ├── scripts/         # GDScript files (.gd)
 ├── assets/          # Fonts, sounds, textures
 ├── .vscode/         # VS Code integration
