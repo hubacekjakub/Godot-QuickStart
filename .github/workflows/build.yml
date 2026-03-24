@@ -8,9 +8,9 @@ on:
   workflow_dispatch:
 
 env:
-  GODOT_VERSION: "4.6"
-  GODOT_EXPORT_VERSION: "4.6-stable"
-  GAME_NAME: ${{ secrets.ITCH_GAME_NAME }}
+  GODOT_VERSION: "4.6.1"
+  GODOT_EXPORT_VERSION: "4.6.1-stable"
+  ITCH_GAME_NAME: ${{ secrets.ITCH_GAME_NAME }}
 
 jobs:
   build:
@@ -18,7 +18,7 @@ jobs:
     name: "🏗️ Build Game"
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           lfs: true
 
@@ -40,8 +40,8 @@ jobs:
           wine_path: /usr/bin/wine64
 
       - name: Upload Build Artifacts
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
-          name: ${{ inputs.game_name }}-Artifacts
+          name: ${{ env.ITCH_GAME_NAME }}-Artifacts
           path: ${{ steps.export.outputs.archive_directory }}/*
           retention-days: 30

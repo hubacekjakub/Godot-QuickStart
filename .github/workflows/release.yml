@@ -11,7 +11,7 @@ on:
         required: true
 
 env:
-  GODOT_EXPORT_VERSION: "4.6-stable"
+  GODOT_EXPORT_VERSION: "4.6.1-stable"
   ITCH_GAME_NAME: ${{ secrets.ITCH_GAME_NAME }}
 
 jobs:
@@ -23,13 +23,13 @@ jobs:
     name: "📦 Create Release"
     steps:
       - name: Download Build Artifacts
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v8
         with:
-          name: ${{ inputs.game_name }}-Artifacts
+          name: ${{ env.ITCH_GAME_NAME }}-Artifacts
           path: ./builds
 
       - name: Create Release
-        uses: ncipollo/release-action@v1.18.0
+        uses: ncipollo/release-action@v1.20.0
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           generateReleaseNotes: true
@@ -52,9 +52,9 @@ jobs:
     name: "🚀 Deploy to itch.io"
     steps:
       - name: Download Build Artifacts
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v8
         with:
-          name: ${{ inputs.game_name }}-Artifacts
+          name: ${{ env.ITCH_GAME_NAME }}-Artifacts
           path: ./builds
 
       - name: Setup Butler
@@ -76,7 +76,7 @@ jobs:
             mkdir -p "./deploy_$CHANNEL"
             unzip -q "$archive" -d "./deploy_$CHANNEL"
 
-            if butler push "./deploy_$CHANNEL" ${{ secrets.ITCH_USERNAME }}/${{ env.ITCH_GAME_NAME }}:$CHANNEL --userversion ${{ github.ref_name }}; then
+            if butler push "./deploy_$CHANNEL" "${{ secrets.ITCH_USERNAME }}/${{ env.ITCH_GAME_NAME }}:$CHANNEL" --userversion "${{ github.ref_name }}"; then
               echo "✅ $CHANNEL deployed successfully"
             else
               echo "⚠️ Failed to deploy $CHANNEL"
