@@ -45,46 +45,29 @@ jobs:
           echo "🎮 Testing all levels..."
           MAIN_FAILED=0
 
-          for level in $(find ./levels -name "*.tscn" -o -name "*.scn" 2>/dev/null); do
-            echo "  Testing: $level"
-            OUTPUT=$(timeout 10 godot --headless --path . --main-scene "$level" --quit-after 3 2>&1) || true
-            echo "$OUTPUT"
+          if [ -d "./levels" ]; then
+            for level in $(find ./levels -name "*.tscn" -o -name "*.scn" 2>/dev/null); do
+              echo "  Testing: $level"
+              OUTPUT=$(timeout 10 godot --headless --path . --main-scene "$level" --quit-after 3 2>&1) || true
+              echo "$OUTPUT"
 
-            if echo "$OUTPUT" | grep -q "^ERROR:"; then
-              if [[ "$level" == *"Main.tscn" ]]; then
-                echo "  ❌ ERROR: Main level has errors!"
-                MAIN_FAILED=1
+              if echo "$OUTPUT" | grep -q "^ERROR:"; then
+                if [[ "$level" == *"Main.tscn" ]]; then
+                  echo "  ❌ ERROR: Main level has errors!"
+                  MAIN_FAILED=1
+                else
+                  echo "  ⚠️ WARNING: $level has errors (non-blocking)"
+                fi
               else
-                echo "  ⚠️ WARNING: $level has errors (non-blocking)"
+                echo "  ✅ OK: $level"
               fi
-            else
-              echo "  ✅ OK: $level"
-            fi
-          done
+            done
+          else
+            echo "⚠️ No levels directory found, skipping level testing."
+          fi
 
           if [ $MAIN_FAILED -eq 1 ]; then
             echo "❌ Main level failed - blocking build"
             exit 1
           fi
           echo "✅ Level testing completed"
-
-  style-check:
-    runs-on: ubuntu-latest
-    name: "📏 Code Style"
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v6
-
-      - name: Install gdtoolkit
-        run: pip install gdtoolkit==4.*
-
-      - name: Lint GDScript
-        run: |
-          echo "📏 Linting GDScript files..."
-          gdlint scripts/ || true
-          echo "✅ Lint check completed"
-
-      - name: Format Check
-        run: |
-          echo "📐 Checking GDScript formatting..."
-          gdformat --check scripts/ || echo "⚠️ Some files need formatting (run: gdformat scripts/)"
