@@ -1,7 +1,7 @@
 name: "CI/CD Pipeline"
 
 # Orchestrator Workflow
-# 1. Validation (Check + Lint) - Always runs
+# 1. Validation (Check) - Always runs
 # 2. Build - Runs on tags or manual dispatch
 # 3. Release & Deploy - Runs on tags/manual, uses build artifacts
 
