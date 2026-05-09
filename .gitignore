@@ -1,43 +1,27 @@
-# Godot 4+ specific ignores
+# Godot 4+ specific
 .godot/
-/android/
 
 # Godot-specific ignores
-.import/
+*.import
 export.cfg
-# export_presets.cfg
+export_presets.cfg.bak
 
-# Imported translations (automatically generated from CSV files)
+# Imported translations
 *.translation
 
-# Mono-specific ignores
+# Mono/C# specific (if added later)
 .mono/
-data_*/
-mono_crash.*.json
-
-# IDE specific files
-.idea/
-/.vs
-*.swp
-*.swo
-*~
-
-# Build artifacts
-builds/
-*.apk
-*.ipa
-*.exe
-*.pck
-*.zip
-
-# OS generated files
-.DS_Store
-.DS_Store?
-._*
-.Spotlight-V100
-.Trashes
-ehthumbs.db
-Thumbs.db
+bin/
+obj/
 
 # Logs
+logs/
 *.log
+
+# External editor files
+.vscode/
+.idea/
+
+# OS-specific
+.DS_Store
+Thumbs.db
