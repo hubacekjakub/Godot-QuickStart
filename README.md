@@ -25,14 +25,14 @@ Perfect for game jams, prototypes, or serious indie projects where you want a cl
 ## 🚀 Quick Start
 
 1. Click **Use this template** → Create a new repository.
-2. Follow the **[SETUP.md](SETUP.md)** guide to get everything running in minutes.
+2. Follow the **[SETUP](SETUP.md)** guide to get everything running in minutes.
 3. **Press F5** in Godot to run • **Start building** your magic.
 
 **Status:** The message "magic starts here" will appear centered on screen.
 
 ## ⚡ Features
 
-- **Minimalist Skeleton** - No "ball demo" bloat, just a clean centered label to start your project.
+- **Minimalist Skeleton** - No bloat, just a clean centered label to start your project.
 - **Complete CI/CD Pipeline** - Push a tag, get automatic builds + itch.io deployment
 - **Advanced Git Configuration** - Optimized `.gitattributes` for LFS, team locking, and merge safety.
 - **Multi-Platform Builds** - Windows, Linux, Web exports on every release
@@ -86,4 +86,4 @@ You are free to use, modify, and distribute this template in your own projects.
 
 ---
 
-**💡 Pro Tip:** Star this repo if it helps your workflow! Questions? Open an issue or check the [live demo](https://hubacekjakub.itch.io/godot-quick-start) to see everything working.
+**💡 Tip:** Star this repo if it helps your workflow! Questions? Open an issue or check the [live demo](https://hubacekjakub.itch.io/godot-quick-start) to see everything working.
