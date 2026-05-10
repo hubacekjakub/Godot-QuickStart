@@ -1,14 +1,14 @@
 
-# Godot QuickStart Template
+# Godot 4.6.2 QuickStart Template
 
 [![itch.io](https://img.shields.io/badge/itch.io-Live%20Demo-3eff6a?logo=itch.io)](https://hubacekjakub.itch.io/godot-quick-start)
 [![CI Status](https://github.com/hubacekjakub/Godot-QuickStart/actions/workflows/main.yml/badge.svg)](https://github.com/hubacekjakub/Godot-QuickStart/actions/workflows/main.yml)
 [![Build Status](https://github.com/hubacekjakub/Godot-QuickStart/actions/workflows/main.yml/badge.svg)](https://github.com/hubacekjakub/Godot-QuickStart/actions/workflows/main.yml)
 [![Latest Release](https://img.shields.io/badge/GitHub-Release-blue?logo=github)](https://github.com/hubacekjakub/Godot-QuickStart/releases/latest)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://github.com/hubacekjakub/Godot-QuickStart/blob/main/LICENSE)
-[![Godot 4.6](https://img.shields.io/badge/Godot-4.6-blue)](https://godotengine.org/)
+[![Godot 4.6.2](https://img.shields.io/badge/Godot-4.6.2-blue)](https://godotengine.org/)
 
-**My personal Godot 4.6 template with automated CI/CD and itch.io deployment.** Speed up development and deployment of any Godot project.
+**A minimalist Godot 4.6.2 template with automated CI/CD, advanced Git configuration, and itch.io deployment.** Speed up development and deployment of any Godot project.
 
 🎮 **[Try Live Demo](https://hubacekjakub.itch.io/godot-quick-start)**
 
@@ -16,23 +16,26 @@
 
 This template eliminates the tedious setup work for modern Godot development:
 - **Zero-config CI/CD** - Works out of the box with GitHub Actions
+- **Professional Git Standards** - Pre-configured Git LFS with lockable binaries and merge-safe scene formats.
 - **Production-ready workflow** - Used for real game releases
 - **Developer-friendly** - VS Code integration with proper debugging
 - **One-tag deployment** - Push `v1.0.0` and your game is live on itch.io
 
-Perfect for game jams, prototypes, or serious indie projects!
+Perfect for game jams, prototypes, or serious indie projects where you want a clean slate!
 
 ## 🚀 Quick Start
 
-1. **Fork** this repository → **Clone** your fork → **Open** in Godot
-2. **Press F5** to run • **Replace the ball** with your game
-3. **Optional:** Set up [itch.io deployment](#-automated-deployment) for one-click publishing
+1. **Fork** this repository → **Clone** your fork.
+2. Follow our **[Step-by-Step Setup Guide](docs/guide/step-by-step.md)** to get everything running in minutes.
+3. **Press F5** in Godot to run • **Start building** your magic.
 
-**Controls:** WASD/Arrows to move • Escape to quit
+**Status:** The message "magic starts here" will appear centered on screen.
 
 ## ⚡ Features
 
+- **Minimalist Skeleton** - No "ball demo" bloat, just a clean centered label to start your project.
 - **Complete CI/CD Pipeline** - Push a tag, get automatic builds + itch.io deployment
+- **Advanced Git Configuration** - Optimized `.gitattributes` for LFS, team locking, and merge safety.
 - **Multi-Platform Builds** - Windows, Linux, Web exports on every release
 - **VS Code Integration** - Debugging, tasks, and launch configurations included
 - **Professional Structure** - Organized folders, export presets, proper gitignore
