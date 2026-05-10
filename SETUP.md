@@ -36,8 +36,9 @@ If you are a first-time user or having trouble running the project locally, foll
 
 ### 1. Clone & Initialize Git LFS
 This project uses Git LFS for binary files. Ensure it is initialized before opening Godot:
-1. **Clone** the project.
-2. **Install** [Git LFS](https://git-lfs.github.com/).
+1. Click **Use this template** at the top of the GitHub page to create your own repository.
+2. **Clone** your new repository.
+3. **Install** [Git LFS](https://git-lfs.github.com/).
 3. **Run**:
    ```bash
    git lfs install
