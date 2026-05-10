@@ -26,7 +26,7 @@ Perfect for game jams, prototypes, or serious indie projects where you want a cl
 ## 🚀 Quick Start
 
 1. **Fork** this repository → **Clone** your fork.
-2. Follow our **[Step-by-Step Setup Guide](docs/guide/step-by-step.md)** to get everything running in minutes.
+2. Follow the **[SETUP.md](SETUP.md)** guide to get everything running in minutes.
 3. **Press F5** in Godot to run • **Start building** your magic.
 
 **Status:** The message "magic starts here" will appear centered on screen.
