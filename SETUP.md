@@ -39,7 +39,7 @@ This project uses Git LFS for binary files. Ensure it is initialized before open
 1. Click **Use this template** at the top of the GitHub page to create your own repository.
 2. **Clone** your new repository.
 3. **Install** [Git LFS](https://git-lfs.github.com/).
-3. **Run**:
+4. **Run**:
    ```bash
    git lfs install
    git lfs pull
@@ -69,6 +69,13 @@ Use the included `.vscode` configurations for professional debugging:
 
 ### 🧩 Merge-Safe Scenes
 Our Git configuration ensures that `.tscn` and `.tres` files are treated as text. This allows you to diff and merge your scenes and resources just like code, avoiding "binary black box" issues common in other engines.
+
+---
+
+## 🖥️ Platform Notes
+
+- **Windows, Linux, Web** — Fully tested and deployed automatically via CI/CD.
+- **macOS** — Export preset is not included. macOS builds require code signing and a Mac runner, which adds complexity beyond this template's scope.
 
 ---
 
