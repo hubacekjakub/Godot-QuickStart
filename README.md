@@ -1,13 +1,15 @@
 
-# Godot 4.6.2 QuickStart Template
+# Godot 4.7 QuickStart Template
 
 [![itch.io](https://img.shields.io/badge/itch.io-Live%20Demo-3eff6a?logo=itch.io)](https://hubacekjakub.itch.io/godot-quick-start)
 [![CI Status](https://github.com/hubacekjakub/Godot-QuickStart/actions/workflows/main.yml/badge.svg)](https://github.com/hubacekjakub/Godot-QuickStart/actions/workflows/main.yml)
 [![Latest Release](https://img.shields.io/badge/GitHub-Release-blue?logo=github)](https://github.com/hubacekjakub/Godot-QuickStart/releases/latest)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://github.com/hubacekjakub/Godot-QuickStart/blob/main/LICENSE)
-[![Godot 4.6.2](https://img.shields.io/badge/Godot-4.6.2-blue)](https://godotengine.org/)
+[![Godot 4.7](https://img.shields.io/badge/Godot-4.7-blue)](https://godotengine.org/)
 
-**A minimalist Godot 4.6.2 template with automated CI/CD, advanced Git configuration, and itch.io deployment.** Speed up development and deployment of any Godot project.
+> Looking for a different Godot version? Use the **branch switcher** (the dropdown at the top-left of this page on GitHub) to see all supported versions.
+
+**A minimalist Godot 4.7 template with automated CI/CD, advanced Git configuration, and itch.io deployment.** Speed up development and deployment of any Godot project.
 
 🎮 **[Try Live Demo](https://hubacekjakub.itch.io/godot-quick-start)**
 

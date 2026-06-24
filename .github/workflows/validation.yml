@@ -4,7 +4,7 @@ on:
   workflow_call:
 
 env:
-  GODOT_VERSION: "4.6.2"
+  GODOT_VERSION: "4.7"
 
 jobs:
   validate:

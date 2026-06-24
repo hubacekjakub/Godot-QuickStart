@@ -11,9 +11,9 @@ config_version=5
 [application]
 
 config/name="Godot QuickStart"
-config/description="A minimalist Godot 4.6.2 starter template."
+config/description="A minimalist Godot 4.7 starter template."
 run/main_scene="res://levels/Main.tscn"
-config/features=PackedStringArray("4.6.2", "GL Compatibility")
+config/features=PackedStringArray("4.7", "GL Compatibility")
 config/icon="res://icon.svg"
 
 [display]

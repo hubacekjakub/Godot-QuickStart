@@ -7,11 +7,11 @@ name: "CI/CD Pipeline"
 
 on:
   push:
-    branches: [ main, develop, feature/* ]
+    branches: [ "godot-*", main, develop, feature/* ]
     tags:
       - "v*"
   pull_request:
-    branches: [ main, develop ]
+    branches: [ "godot-*", main, develop ]
   workflow_dispatch:
 
 
